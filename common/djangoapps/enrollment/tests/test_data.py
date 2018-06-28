@@ -150,6 +150,22 @@ class EnrollmentDataTest(ModuleStoreTestCase):
         updated_results = data.get_course_enrollments(self.user.username)
         self.assertEqual(results, updated_results)
 
+        # Deactivate an enrollment
+        data.update_course_enrollment(
+            self.user.username,
+            unicode(created_courses[0]),
+            'honor',
+            False
+        )
+
+        # by default in-active enrollment will be excluded.
+        results = data.get_course_enrollments(self.user.username)
+        self.assertNotEqual(results, created_enrollments)
+
+        # we can get all enrollments including inactive by passing "is_support_request"
+        results = data.get_course_enrollments(self.user.username)
+        self.assertEqual(results, created_enrollments)
+
     @ddt.data(
         # Default (no course modes in the database)
         # Expect that users are automatically enrolled as "honor".

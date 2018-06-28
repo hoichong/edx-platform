@@ -31,7 +31,7 @@ from student.models import (
 log = logging.getLogger(__name__)
 
 
-def get_course_enrollments(user_id, is_support_request):
+def get_course_enrollments(user_id, is_support_request=False):
     """Retrieve a list representing all aggregated data for a user's course enrollments.
 
     Construct a representation of all course enrollment data for a specific user.
